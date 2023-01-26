@@ -1,0 +1,30 @@
+remote=$(aws s3 ls s3://refine-logs.s3.mng.refinehub.com/syslog/ | cut -c 2- | cut -c31-)
+fixed=`echo $remote | cut -c 3-`
+
+loc=$(ls data | grep [*.*.*.*])
+
+leng=$(echo $fixed | grep / | wc -w)
+loc_leng=$(echo $loc | grep " " | wc -w)
+
+
+#arr_txts=$(echo $remote | tr "/" "\n")
+
+# num_leng=$(($leng-1))
+echo $leng
+echo $loc_leng
+#echo $loc
+if [ $leng -eq $loc_leng ]
+then
+        echo "there are no differences"
+        for ((i=0 ; i < $leng ; i++))
+        do
+                j=`echo $fixed | cut -d '/' -f$i`
+                arr[$i]=$j
+                loc_dir=$(echo $loc | cut -d ' ' -f$i)
+                echo loc_dir is $loc_dir
+                loc_arr[$i]=$loc_dir
+        done
+echo $loc_leng
+echo ${arr[3]}
+echo ${loc_arr[5]}
+fi
