@@ -21,7 +21,7 @@ then
                 #echo $i
                 new_dir=`awk 'NR == '$i' {print $0; exit}' result.txt`
                 echo $new_dir
-                aws s3 cp /var/log/logstash/data/$new_dir  s3://refine-logs.s3.mng.refinehub.com/syslog/$new_dir --recursive
+                aws s3 cp /var/log/logstash/data/$new_dir  s3://refine-logs.s3.mng.refinehub.com/syslog/$new_dir --recursive >>> /var/log/logstash/s3_upload_log/s3_upload_$date_now.success
                 echo "uploading " $1
                 echo $new_dir "is done"
         done
